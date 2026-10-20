@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>植物园</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  /* 场景原始尺寸 960x560，等比缩放铺满视口 */
+  #stage {
+    width: min(100vw, 960px, calc(100vh * 960 / 560));
+    aspect-ratio: 960 / 560;
+    background: #000;
+  }
+  #stage > * { width: 100% !important; height: 100% !important; display: block; }
+</style>
+</head>
+<body>
+
+<div id="stage"></div>
+
+<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+<script>
+(function () {
+  function boot() {
+    var R = window.RufflePlayer;
+    if (!R || !R.newest) return;
+
+    R.config = R.config || {};
+    R.config.autoplay = 'on';
+    R.config.letterbox = 'on';
+    R.config.backgroundColor = '#000000';
+    R.config.showSwfDownload = false;
+
+    var player = R.newest().createPlayer();
+    document.getElementById('stage').appendChild(player);
+    player.load('26.swf');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+
+</body>
+</html>
